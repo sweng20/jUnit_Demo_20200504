@@ -2,6 +2,7 @@ package edu.sweng;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,7 +13,7 @@ class CalculatorTest {
 
     @BeforeEach
     public void setUp(){
-        history = new CalculationHistory();
+        history = Mockito.mock(CalculationHistory.class);
         calculator = new Calculator(history);
     }
 
@@ -26,7 +27,6 @@ class CalculatorTest {
 
         // then verify expected result
         assertEquals(5.5, result);
-        assertEquals(1, history.getHistorySize());
     }
 
     @Test
@@ -38,5 +38,15 @@ class CalculatorTest {
 
         //then
         assertEquals(1.5, result);
+    }
+
+    @Test
+    public void givenDefalutCalculator_whenCallingAddMethod_thenHistoryAppendIsCalledOnce() {
+        //when
+        calculator.add(1.0, 2.5);
+
+        //then
+        Mockito.verify(history, Mockito.times(1)).append(Mockito.any(CompletedCalculation.class));
+
     }
 }
