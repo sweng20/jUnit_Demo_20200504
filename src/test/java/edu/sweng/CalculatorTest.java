@@ -8,10 +8,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class CalculatorTest {
 
     private Calculator calculator;
+    private CalculationHistory history;
 
     @BeforeEach
     public void setUp(){
-        calculator = new Calculator();
+        history = new CalculationHistory();
+        calculator = new Calculator(history);
     }
 
 
@@ -24,6 +26,7 @@ class CalculatorTest {
 
         // then verify expected result
         assertEquals(5.5, result);
+        assertEquals(1, history.getHistorySize());
     }
 
     @Test
